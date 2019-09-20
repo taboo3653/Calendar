@@ -25,6 +25,7 @@ export default function DaysContainer() {
                     fields.map((item, index) => {
                         return <DayField
                             key={index}
+                            
                             type={item.type}
                             onClick={event => { showEventForm(/*event.currentTarget,*/ item.fieldData, item.date) }}
                             dayVal={item.dayVal}
