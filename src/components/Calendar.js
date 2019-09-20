@@ -13,7 +13,9 @@ function Calendar(props) {
 
   const [selectedMonth, setSelectedMonth] = useState(new Date());
 
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([
+    
+  ]);
 
 
   const deleteEvent = (event) => {

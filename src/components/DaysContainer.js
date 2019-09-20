@@ -19,7 +19,7 @@ export default function DaysContainer() {
 
     return (
         <>
-            <div id="DayFieldsContainer"
+            <div
                 className="day-fields-container">
                 {
                     fields.map((item, index) => {

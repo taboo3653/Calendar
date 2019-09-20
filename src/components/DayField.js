@@ -1,12 +1,13 @@
 import React from 'react';
 import { Typography } from 'antd';
+import PropTypes from 'prop-types';
 
 const DayField = ({ type, onClick, dayVal, fieldData }) => {
 
     const {Text} = Typography;
 
     return (<div
-        className={"DayField " + type}
+        className={"day-field " + type}
         onClick={onClick}>
         <Text className="day-field_text">{dayVal}</Text><br />
         {fieldData
@@ -16,6 +17,16 @@ const DayField = ({ type, onClick, dayVal, fieldData }) => {
             </>
             : ""}
     </div>);
+}
+
+DayField.propTypes = {
+        type: PropTypes.string,
+        onClick: PropTypes.func,
+        dayVal: PropTypes.node,
+        fieldData: PropTypes.shape ({
+            name: PropTypes.node,
+            participants: PropTypes.node
+        })
 }
 
 export default DayField;
