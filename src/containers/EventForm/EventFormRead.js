@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Typography, Button } from 'antd';
 import { MonthNames } from '../../utils'
-import { EventsContext } from '../../context/EventsContext';
-import { EventFormStateContext } from '../../context/EventFormStateContext';
+import { connect } from 'react-redux'
+import { deleteEvent } from "../../redux/actions/events"
+import { hideEventForm, showEventForm } from "../../redux/actions/eventForm"
 
-const EventFormRead = ({ info }) => {
+
+const EventFormRead = ({ info, deleteEvent, showEventForm, hideEventForm }) => {
     const { Title, Text } = Typography;
-    const { deleteEvent } = useContext(EventsContext);
-    const { showEventForm, hideEventForm } = useContext(EventFormStateContext);
 
 
     return (<div className="event-form_read">
@@ -29,7 +29,7 @@ const EventFormRead = ({ info }) => {
                 }}
             >Edit</Button>
             <Button size="small"
-                onClick={() => {
+                onClick={() => {                    
                     deleteEvent(info);
                     hideEventForm();
                 }}>Delete</Button>
@@ -37,4 +37,4 @@ const EventFormRead = ({ info }) => {
     </div>);
 }
 
-export default EventFormRead;
+export default connect(null, {deleteEvent, showEventForm, hideEventForm})(EventFormRead);

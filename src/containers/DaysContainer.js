@@ -1,33 +1,28 @@
-import React, { useContext } from 'react';
-import DayField from './DayField';
+import React from 'react';
+import DayField from '../components/DayField';
 import { getCountDaysInMonts } from '../utils';
-import { EventsContext } from '../context/EventsContext';
-import { SelectedMonthContext } from '../context/SelectedMonthContext';
-import { EventFormStateContext } from '../context/EventFormStateContext';
+import { showEventForm } from "../redux/actions/eventForm"
 
+import { connect } from 'react-redux';
 
 const DayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 
-export default function DaysContainer() {
+const DaysContainer = ({events, selectedMonth, showEventForm}) => {
 
-    const { selectedMonth } = useContext(SelectedMonthContext);
-    const { events } = useContext(EventsContext);
-    const { showEventForm } = useContext(EventFormStateContext);
     
     const fields = createFields(selectedMonth);
 
     return (
         <>
-            <div
-                className="day-fields-container">
+            <div className="day-fields-container">
                 {
                     fields.map((item, index) => {
                         return <DayField
                             key={index}
                             
                             type={item.type}
-                            onClick={event => { showEventForm(/*event.currentTarget,*/ item.fieldData, item.date) }}
+                            onClick={() => { showEventForm(item.fieldData, item.date) }}
                             dayVal={item.dayVal}
                             fieldData={item.fieldData}
                         />
@@ -111,7 +106,12 @@ export default function DaysContainer() {
     };
 }
 
-
+export default connect(
+    ({events, selectedMonth}) => ({
+        events: events,
+        selectedMonth: selectedMonth
+    }), {showEventForm}
+)(DaysContainer);
 
 
 

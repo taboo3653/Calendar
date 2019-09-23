@@ -1,16 +1,15 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Input, Typography } from 'antd';
-import { EventsContext } from '../context/EventsContext';
-import { EventFormStateContext } from '../context/EventFormStateContext';
 import { MonthNames } from '../utils'
+import { connect } from 'react-redux'
+import { showEventForm } from "../redux/actions/eventForm"
 
-function Search() {
+
+function Search({events, showEventForm}) {
 
     const { Text } = Typography;
     const { Search } = Input;
     const searchRef = useRef(null);
-    const { events } = useContext(EventsContext);
-    const { showEventForm } = useContext(EventFormStateContext);
 
     const [searchValue, setSearchValue] = useState("");
 
@@ -62,7 +61,10 @@ function Search() {
                     <div
                         className="search_items_item"
                         key={index}
-                        onClick={event => { showEventForm(item, item.date) }}
+                        onClick={event => { 
+                            showEventForm(item, item.date); 
+                            setSearchValue("");
+                        }}
                         >
                         <Text strong>{item.name}</Text>
                         <Text>{`${item.date.getDate()} ${MonthNames[item.date.getMonth()]}`}</Text>
@@ -75,4 +77,8 @@ function Search() {
     </div>);
 }
 
-export default Search;
+export default connect(
+    ({events}) => ({
+        events: events
+    }),{showEventForm}
+    )(Search);
